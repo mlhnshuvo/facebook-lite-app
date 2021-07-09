@@ -1,0 +1,4 @@
+task:
+we can add like unlike feature on profile pic
+change the post of author photo with the change of author photo
+if like then change the like color
