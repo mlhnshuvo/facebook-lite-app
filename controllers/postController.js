@@ -1,6 +1,7 @@
 const User = require('../Model/User')
 const Post = require('../Model/Post')
 const serverError = require('../utils/serverError')
+const fs = require('fs')
 
 function createPost(req, res) {
     const { email } = req.user
@@ -49,6 +50,19 @@ const getAllPost = (req, res) => {
         })
 }
 
+const getPost = (req, res) => {
+    const { id } = req.params
+    Post.findOne({ _id: id })
+        .then(function (post) {
+            res.status(200).json({
+                post
+            })
+        })
+        .catch(function () {
+            serverError(res)
+        })
+}
+
 const getMyPost = (req, res) => {
     const { username } = req.params
     Post.find({ "author.username": username })
@@ -63,54 +77,51 @@ const getMyPost = (req, res) => {
 }
 
 const deletePost = (req, res) => {
-    const postId = req.params.id
-    Post.findOneAndDelete({ _id: postId })
-        .then(function (post) {
-            res.status(200).json({
-                post
+    const { id, username } = req.params
+    if (username === req.user.username) {
+        Post.findOneAndDelete({ _id: id })
+            .then(function (post) {
+                console.log(post.image)
+                fs.unlink('.' + post.image, function (err) {
+                    if (err) {
+                        serverError(res)
+                    } else {
+                        res.status(200).json({
+                            post
+                        })
+                    }
+                })
             })
-        })
-        .catch(function () {
-            serverError(res)
-        })
+            .catch(function () {
+                serverError(res)
+            })
+    }
 }
 
 const likePost = (req, res) => {
-    const { _id, name } = req.user
+    const { _id } = req.user
     const postId = req.params.id
     const author = {
         _id
     }
     Post.findOne({ _id: postId })
         .then(function (result) {
-            const results = { ...result._doc }
-            if (results.likes.length === 0) {
+            if (result.likes.length === 0) {
                 result.likes.push(author)
-                result.save()
-                res.status(200).json({
-                    message: "Liked",
-                    result
-                })
             } else {
-                results.likes.forEach((like) => {
+                result.likes.forEach((like) => {
                     if (like._id.toString() === _id.toString()) {
-                        const removeIndex = results.likes.findIndex((like) => like._id.toString() === _id.toString())
-                        result.likes.splice(removeIndex, 1);
-                        result.save()
-                        res.status(200).json({
-                            message: "You have already liked",
-                            result
-                        })
+                        const removeIndex = result.likes.findIndex((like) => like._id.toString() === _id.toString())
+                        result.likes.splice(removeIndex, 1)
                     } else {
                         result.likes.push(author)
-                        result.save()
-                        res.status(200).json({
-                            message: "Liked",
-                            result
-                        })
                     }
                 })
             }
+            result.save()
+            res.status(200).json({
+                result
+            })
         })
         .catch(function () {
             serverError(res)
@@ -189,6 +200,7 @@ module.exports = {
     createPost,
     deletePost,
     getAllPost,
+    getPost,
     getMyPost,
     likePost,
     commentsPost,

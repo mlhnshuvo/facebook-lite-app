@@ -28,6 +28,8 @@ export default function Login() {
         return <Redirect to="/" />
     }
 
+    localStorage.removeItem('token')
+
     return (
         <form className="form" onSubmit={formHandler}>
             <div className="col-md-8 offset-md-2">

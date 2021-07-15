@@ -5,26 +5,30 @@ import jwt_decode from "jwt-decode";
 import alartAction from './alertAction'
 
 export const registerUser = (user, history) => dispatch => {
-    Axios.post('/api/user/register', user)
-        .then((response) => {
-            dispatch({
-                type: Types.REGISTER__USER,
-                payload: {
-                    user: response.data
-                }
+    if (user.token) {
+        Axios.post('/api/user/register', user)
+            .then((response) => {
+                dispatch({
+                    type: Types.REGISTER__USER,
+                    payload: {
+                        user: response.data
+                    }
+                })
+                history.push("/");
+                setAuthToken(response.data.token)
+                localStorage.setItem("token", response.data.token)
             })
-            history.push("/");
-            setAuthToken(response.data.token)
-            localStorage.setItem("token", response.data.token)
-        })
-        .catch((err) => {
-            dispatch({
-                type: Types.ERROR__USER,
-                payload: {
-                    errors: err.response
-                }
+            .catch((err) => {
+                dispatch({
+                    type: Types.ERROR__USER,
+                    payload: {
+                        errors: err.response
+                    }
+                })
             })
-        })
+    } else {
+        dispatch(alartAction('Please fill recaptcha', 'danger'))
+    }
 }
 
 export const loginUser = (user, history) => dispatch => {
@@ -60,12 +64,13 @@ export const getAllUsers = () => dispatch => {
                     users: res.data
                 }
             })
+            dispatch(isAuthenticated())
         })
         .catch((err) => {
             dispatch({
                 type: Types.GET__ALL__USERS__ERROR,
                 payload: {
-                    errors: err.response.data
+                    errors: err.response
                 }
             })
         })
@@ -99,6 +104,7 @@ export const isAuthenticated = () => dispatch => {
     if (token) {
         var decoded = jwt_decode(token);
         var dateNow = new Date();
+
         if (decoded.exp * 1000 < dateNow.getTime()) {
             dispatch({
                 type: Types.ISAUTHENTICATION,

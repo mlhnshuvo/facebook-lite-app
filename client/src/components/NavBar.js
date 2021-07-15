@@ -8,6 +8,7 @@ import Logout from '../assets/images/logout.png'
 import { Link, Redirect } from "react-router-dom";
 import { logout } from '../store/actions/userAction'
 import { useSelector, useDispatch } from 'react-redux'
+import { searchTerm } from '../store/actions/postAction'
 
 export default function NavBar() {
     const [state, setState] = useState({ show: false })
@@ -24,7 +25,12 @@ export default function NavBar() {
             <div className="nav__nav-bar">
                 <div className="nav__left-side">
                     <Link to="/"><img src={Logo} className="nav__right-logo" alt="Logo" /></Link>
-                    <input type="text" placeholder="Search..." className="input nav__logo-input" />
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        className="input nav__logo-input"
+                        onChange={(e) => dispatch(searchTerm(e.target.value))}
+                    />
                 </div>
                 <div className="nav__right-side">
                     <Link to={`/${store.user && store.user.username}`} ><span className="nav__icon icon--pointer">
@@ -40,7 +46,7 @@ export default function NavBar() {
                         className="nav__icon position-reletive"
                         onClick={() => setState({ show: !state.show })}>
                         <img className="nav__icon-img icon--pointer" src={Collapse} alt="Collapse" />
-                        {state.show ? <ul className="nav__collape">
+                        {state.show && <ul className="nav__collape">
                             <Link to={`/${store.user && store.user.username}`}><li className="nav__collape-item icon--pointer">
                                 <img src={store.user && store.user.avatar.length > 0 ? store.user.avatar[0] : Avatar} className="avatar" alt="" />
                                 <h6>{store.user ? store.user.name : "Account"}</h6>
@@ -54,7 +60,7 @@ export default function NavBar() {
                                     </span>
                                 </a>
                             </li>
-                        </ul> : null}
+                        </ul>}
                     </span>
                 </div>
             </div>

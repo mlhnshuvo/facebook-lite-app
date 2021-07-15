@@ -126,7 +126,7 @@ a:hover {
   padding-right: 70px;
   padding-left: 15px;
   cursor: pointer;
-  width: 230px;
+  width: 245px;
   height: 30px;
 }
 /* Navbar end */
@@ -344,6 +344,7 @@ p {
   width: 95px;
   height: 125px;
   border: 2px solid #efefef;
+  cursor: pointer;
 }
 
 .profile-photo {
@@ -366,10 +367,14 @@ p {
 .edit__button {
   margin: 20px;
 }
+
 .profile__bio {
   color: #0d6efd;
   cursor: pointer;
+  margin-top: -28px;
+  margin-bottom: 18px;
 }
+
 .short-me__school {
   padding: 10px;
 }
@@ -403,6 +408,7 @@ p {
 
 .alert-style {
   margin-top: 60px;
+  margin-bottom: -85px;
 }
 
 .profile-edit-form {
@@ -458,6 +464,10 @@ p {
   width: 250px;
   margin: 0px 60px;
 }
+.show__post-icon {
+  width: 20px;
+  margin-right: 10px;
+}
 
 .btn-reply {
   background-color: #ffffff;
@@ -468,6 +478,28 @@ p {
   text-decoration: underline;
 }
 
-.login-form__​text-underline{
+.login-form__​text-underline {
   text-decoration: underline;
+}
+
+/* Single Post */
+.single-post {
+  margin: auto;
+  margin-top: 100px;
+}
+
+.ProfilePicShow {
+  margin-top: 70px;
+  text-align: center;
+}
+
+.ProfilePicShow__image {
+  width: 580px;
+  height: auto;
+}
+
+.ProfilePicShow__btn {
+  display: block;
+  margin: auto;
+  margin-bottom: 10px;
 }

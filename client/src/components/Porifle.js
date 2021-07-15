@@ -1,12 +1,13 @@
 import React from 'react'
 import CoverPhoto from '../assets/images/coverphoto.jpg'
-import Avatar from '../assets/images/avatar.svg'
 import { connect } from 'react-redux'
-import { fileUpload, editProfile } from '../store/actions/profileAction'
+import { fileUpload, editProfile, deleteProfile } from '../store/actions/profileAction'
+import { logout } from '../store/actions/userAction'
 import Title from '../components/Title'
 import ProfileModal from './ProfileModal'
 import Loading from './Lodding'
-import jwt_decode from "jwt-decode";
+import LoginUser from '../utils/loginUser'
+import ShowImg from './ShowImg'
 
 class Profile extends React.Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class Profile extends React.Component {
             modalOpen: false,
             isEditable: false,
             bio: '',
-            decode: ''
+            decode: '',
+            cropModal: false
         }
     }
 
@@ -33,7 +35,10 @@ class Profile extends React.Component {
         const fd = new FormData()
         fd.append('avatar', this.state.selectedFile)
         this.props.fileUpload(fd)
-        this.setState({ selectedFile: null })
+        this.setState({ selectedFile: null },
+            () => {
+                return this.openModal()
+            })
     }
 
     modalOpen = () => {
@@ -50,10 +55,22 @@ class Profile extends React.Component {
         this.props.state.user.bio = this.state.bio
         this.props.editProfile(this.props.state.user)
     }
+
     componentDidMount() {
-        const token = localStorage.getItem('token')
-        const decode = jwt_decode(token);
-        this.setState({ decode: decode.username });
+        this.setState({ decode: LoginUser().username });
+    }
+
+    deleteProfile = (username) => {
+        this.props.deleteProfile(username)
+        this.props.logout()
+    }
+
+    openModal = () => {
+        this.setState({ cropModal: true });
+    }
+
+    onClose = () => {
+        this.setState({ cropModal: false });
     }
 
     render() {
@@ -68,12 +85,9 @@ class Profile extends React.Component {
                             <Title title={`${userMe.user.name} | Facebook`} />
                             <div className="profile__top">
                                 <img src={CoverPhoto} alt="coverPhoto" className="cover__photo" />
-                                {userMe.user.username === this.state.decode && <input
-                                    style={{ display: 'none' }}
-                                    type='file'
-                                    onChange={this.fileSelectedHandler}
-                                    ref={fileInput => this.fileInput = fileInput} />}
-                                <img src={userMe.user.avatar.length > 0 ? userMe.user.avatar[0] : Avatar} alt="" className="profile__photo" onClick={() => this.fileInput.click()} />
+                                <ShowImg
+                                    fileSelectedHandler={this.fileSelectedHandler}
+                                />
                                 <h3 className="profile__name">{userMe.user.name}</h3>
                                 {userMe.user.bio ? (
                                     <p className="profile__bio">{userMe.user.bio} </p>
@@ -94,7 +108,6 @@ class Profile extends React.Component {
                                         ) : (
                                             <>
                                                 {
-
                                                     userMe.user.username === this.state.decode && <p
                                                         className="profile__bio"
                                                         onClick={() => {
@@ -102,18 +115,27 @@ class Profile extends React.Component {
                                                         }}>Add bio</p>
                                                 }
                                             </>
-
                                         )}
                                     </div>
                                 )}
                                 {
-                                    userMe.user.username === this.state.decode && <button
-                                        className="btn btn-primary edit__button mt-2"
-                                        type="submit"
-                                        onClick={this.modalOpen}
-                                    >Edit Profile</button>
+                                    userMe.user.username === this.state.decode && (
+                                        <div>
+                                            <button
+                                                className="btn btn-primary edit__button mt-2"
+                                                type="submit"
+                                                onClick={this.modalOpen}
+                                            >Edit Profile</button>
+                                            <a href="/login">
+                                                <button
+                                                    className="btn btn-danger edit__button mt-2"
+                                                    type="submit"
+                                                    onClick={() => this.deleteProfile(userMe.user.username)}
+                                                >Delete Account</button>
+                                            </a>
+                                        </div>
+                                    )
                                 }
-
                             </div>
                             {this.state.modalOpen && <ProfileModal
                                 modalClose={this.modalClose}
@@ -130,4 +152,4 @@ const mapStateToProps = (state) => ({
     state: state.profileReducer
 })
 
-export default connect(mapStateToProps, { fileUpload, editProfile })(Profile)
+export default connect(mapStateToProps, { fileUpload, editProfile, deleteProfile, logout })(Profile)

@@ -8,7 +8,9 @@ import ActiveAccount from '../pages/ActiveAccount'
 import MatchEmail from '../pages/MatchEmail'
 import Resetpass from '../pages/Resetpass'
 import Profile from '../pages/Profile'
+import SinglePost from '../pages/SinglePost'
 import Page404 from '../pages/Page404'
+import ProfilePicShow from '../pages/ProfilePicShow'
 import {
     BrowserRouter as Router,
     Switch,
@@ -31,6 +33,9 @@ export default function router() {
                 <Route exact path="/login">
                     <Login />
                 </Route>
+                <Route exact path="/post/:id">
+                    <SinglePost />
+                </Route>
                 <PrivateRoute exact path="/:username">
                     <Profile homeStyleProfile="homeStyleProfile" />
                 </PrivateRoute>
@@ -42,6 +47,9 @@ export default function router() {
                 </Route>
                 <Route exact path="/changepass/:token">
                     <Resetpass />
+                </Route>
+                <Route exact path="/profilepic/:name">
+                    <ProfilePicShow />
                 </Route>
                 <Page404 />
             </Switch>

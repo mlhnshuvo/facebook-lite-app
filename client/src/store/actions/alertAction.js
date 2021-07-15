@@ -1,17 +1,15 @@
 import * as Types from './Types'
-import shortid from 'shortid'
 
-const alartAction = (msg, color, timeout = 5000) => dispatch => {
-    const id = shortid.generate()
+const alartAction = (msg, color, timeout = 4000) => dispatch => {
     dispatch({
         type: Types.GET__ALART,
         payload: {
-            msg, color, id
+            msg,
+            color
         }
     })
     setTimeout(() => dispatch({
-        type: Types.REMOVE__ALART,
-        payload: id
+        type: Types.REMOVE__ALART
     }), timeout)
 }
 

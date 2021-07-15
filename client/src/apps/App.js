@@ -1,8 +1,8 @@
 import React from 'react'
 import { Helmet } from "react-helmet";
 import Router from './router'
-import { useDispatch } from 'react-redux'
 import { isAuthenticated } from '../store/actions/userAction'
+import { useDispatch } from 'react-redux'
 
 export default function App() {
     const dispatch = useDispatch()

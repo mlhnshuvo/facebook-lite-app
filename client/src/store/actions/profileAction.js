@@ -12,7 +12,6 @@ export const getMe = () => dispatch => {
                 }
             })
         })
-
         .catch((err) => {
             dispatch({
                 type: Types.GET__ME__ERROR,
@@ -37,7 +36,6 @@ export const getUser = (username) => dispatch => {
                     }
                 })
             })
-
             .catch((err) => {
                 dispatch({
                     type: Types.GET__USER__ERROR,
@@ -81,6 +79,47 @@ export const editProfile = user => dispatch => {
         .catch((err) => {
             dispatch({
                 type: Types.EDIT__PROFILE__ERROR,
+                payload: {
+                    errors: err.response
+                }
+            })
+        })
+}
+
+export const deleteProfile = (username) => dispatch => {
+    Axios.delete('/api/user/' + username)
+        .then(res => {
+            dispatch({
+                type: Types.DELETE__PROFILE,
+                payload: {
+                    user: res.data.user
+                }
+            })
+        })
+        .catch((err) => {
+            dispatch({
+                type: Types.DELETE__PROFILE__ERROR,
+                payload: {
+                    errors: err.response
+                }
+            })
+        })
+}
+
+export const deleteProfilePic = (index, history, username) => dispatch => {
+    Axios.delete('/api/user/pic/' + index)
+        .then(res => {
+            dispatch({
+                type: Types.DELETE__PROFILE__PIC,
+                payload: {
+                    user: res.data.response
+                }
+            })
+            history.push('/' + username);
+        })
+        .catch((err) => {
+            dispatch({
+                type: Types.DELETE__PROFILE__PIC__ERROR,
                 payload: {
                     errors: err.response
                 }

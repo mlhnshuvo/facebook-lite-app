@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import Like from '../assets/images/like.png'
 import Comments from '../assets/images/comments.png'
 import Share from '../assets/images/share.png'
-import MyImg from '../assets/images/mhsit.jpg'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { likePost, commentPost, commentPostReply } from '../store/actions/postAction'
 import Avatar from '../assets/images/avatar.svg'
 
 export default function CreateCom({ post }) {
+    const store = useSelector((state) => state.profileReducer)
     const [state, setState] = useState({ ComInputShow: false })
     const [comshow, setComshow] = useState({ comShow: false })
     const [replybtn, setReplybtn] = useState({ show: false, showId: "" })
@@ -50,8 +50,8 @@ export default function CreateCom({ post }) {
                             <div>
                                 <h6>{comment.author.name}</h6>
                                 <small>{comment.body}</small>
-                                <button className="btn-reply" 
-                                onClick={() => openReply(comment._id)}>Reply</button>
+                                <button className="btn-reply"
+                                    onClick={() => openReply(comment._id)}>Reply</button>
                             </div>
 
                         </div>
@@ -83,7 +83,7 @@ export default function CreateCom({ post }) {
             }
 
             {state.ComInputShow ? <div className="show-post__comments">
-                <img className="show-post__top-img avatar" src={MyImg} alt="PostImg" />
+                <img className="show-post__top-img avatar" src={store.user && store.user.avatar.length > 0 ? store.user.avatar[0] : Avatar} alt="PostImg" />
                 <input
                     type="text"
                     placeholder="Write a comment..."

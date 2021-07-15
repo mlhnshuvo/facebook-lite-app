@@ -5,7 +5,7 @@ import { useParams, Redirect } from "react-router-dom";
 import alartAction from '../store/actions/alertAction'
 
 function ActiveAccount() {
-    const [state, setState] = useState('')
+    const [state] = useState('')
     const dispatch = useDispatch()
     let { token } = useParams();
     const store = useSelector((state) => state)
@@ -20,7 +20,7 @@ function ActiveAccount() {
             .catch(() => {
                 dispatch(alartAction('Something is wrong!', 'danger'))
             })
-    }, [])
+    }, [dispatch, store.userReducer.isAuthenticated, token])
 
     return (
         <div className="active-account">

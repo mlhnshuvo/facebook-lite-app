@@ -1,15 +1,8 @@
 const mongoose = require('mongoose');
-const config = require('config');
-
-let connectUrl
-if (process.env.NODE_ENV === 'production') {
-    connectUrl = `mongodb+srv://mhshuvoit:${process.env.MONGODB_PASSWORD}@cluster1.xbs5i.mongodb.net/mern-facebook-lite?retryWrites=true&w=majority`
-} else {
-    connectUrl = config.get('localhostURL')
-}
+const {MONGODB_URL} = require('../prodOrDev');
 
 const connectDB = () => {
-    mongoose.connect(connectUrl, {
+    mongoose.connect(MONGODB_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,

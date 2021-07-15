@@ -11,7 +11,7 @@ export default function AllUsers() {
 
     useEffect(() => {
         dispatch(getAllUsers())
-    }, [])
+    }, [dispatch])
 
     return (
         <div className={'ourcard card--users'}>
@@ -23,7 +23,8 @@ export default function AllUsers() {
                     ) : (
                         store.user.map((el) => {
                             return (
-                                <Link to={`${el.username}`} >
+                                <Link to={`${el.username}`}
+                                    key={el._id}>
                                     <li key={el._id} className="card__users__li">
                                         <img className="avatar card__users__li-avatar" src={el.avatar.length > 0 ? el.avatar[0] : Avatar} alt="" />
                                         <p>{el.name}</p>

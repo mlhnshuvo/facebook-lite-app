@@ -1,13 +1,17 @@
 import * as Types from '../actions/Types'
 
-const alertReducer = (state = [], action) => {
-    const { type, payload } = action
-    switch (type) {
+const alertReducer = (state = {}, action) => {
+    switch (action.type) {
         case Types.GET__ALART: {
-            return [...state, payload]
+            return {
+                msg: action.payload.msg,
+                color: action.payload.color
+            }
         }
         case Types.REMOVE__ALART: {
-            return state.filter(al => al.id !== payload)
+            return {
+                state: null
+            }
         }
         default: return state
     }

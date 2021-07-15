@@ -1,22 +1,25 @@
 const User = require('../Model/User')
+const Post = require('../Model/Post')
 const { registerValidator, loginValidator } = require('../validator/userValidator')
 const bcrypt = require('bcryptjs')
 const serverError = require('../utils/serverError')
 const jwt = require('jsonwebtoken');
+const fs = require('fs')
 // const gravatar = require('gravatar');
 const sendMailer = require('../mail/transporter')
 const { activeAccount, welcomeMessage, resetPassword } = require('../mail/templates')
+// const twilio = require('../sms/twilio')
 
 const register = (req, res) => {
     const {
         name,
-        username,
         email,
+        phone,
         password,
         token
     } = req.body;
 
-    const validator = registerValidator({ name, username, email, password, token })
+    const validator = registerValidator({ name, email, password, token })
     if (!validator.isValid) {
         return res.status(400).json(validator.error)
     } else {
@@ -32,12 +35,14 @@ const register = (req, res) => {
                             if (err) {
                                 serverError(res)
                             } else {
+                                let username = email.split('@')[0]
                                 // const avatar = gravatar.url(email, {s: '200', r: 'pg', d: '404'});
                                 const token = jwt.sign({ email, name, username }, process.env.SECRET_KEY, { expiresIn: '1h' })
                                 const user = {
                                     name,
                                     username,
                                     email,
+                                    phone,
                                     password: hash,
                                     activeToken: token,
                                     avatar: [],
@@ -57,7 +62,7 @@ const register = (req, res) => {
                                             token,
                                             message: 'Successfully registered'
                                         })
-                                        // sendMailer(email, name, activeAccount(token))
+                                        sendMailer(email, name, activeAccount(token))
                                     })
                                     .catch(err => {
                                         serverError(res)
@@ -130,6 +135,7 @@ const activeController = (req, res) => {
                     message: "Congratulations! Your account is active"
                 })
                 sendMailer(email, response.name, welcomeMessage())
+                // twilio(response.phone)
             })
             .catch(() => {
                 serverError(res)
@@ -302,6 +308,77 @@ const getProfile = (req, res) => {
         })
 }
 
+const deleteProfile = (req, res) => {
+    const { username } = req.params
+    User.findOneAndRemove({ username })
+        .then(user => {
+            user.avatar.forEach(el => {
+                fs.unlink('./' + el, function (err) {
+                    if (err) {
+                        console.log('Delete not successfully')
+                    } else {
+                        console.log('Delete successfully')
+                    }
+                })
+            })
+            res.status(200).json({
+                user
+            })
+        })
+        .catch(() => {
+            serverError(res)
+        })
+    Post.find()
+        .then((posts) => {
+            posts.forEach((post) => {
+                if (post.author.username === username) {
+                    fs.unlink('./' + post.image, function (err) {
+                        if (err) {
+                            console.log('Delete not successfully')
+                        } else {
+                            console.log('Delete successfully')
+                        }
+                    })
+                }
+            })
+            Post.deleteMany({ "author.username": username })
+                .then(post => {
+                    console.log(post)
+                })
+                .catch(() => {
+                    serverError(res)
+                })
+        })
+}
+
+const deleteProfilePic = (req, res) => {
+    const { username } = req.user
+    const { index } = req.params
+    User.findOne({ username })
+        .then(user => {
+            const avatar = user.avatar[index]
+            const profilePic = user.avatar.filter(el => el !== avatar)
+            User.findOneAndUpdate({ username }, { avatar: profilePic }, { new: true })
+                .then(response => {
+                    fs.unlink('./' + avatar, function (err) {
+                        if (err) {
+                            serverError(res)
+                        } else {
+                            res.status(200).json({
+                                response
+                            })
+                        }
+                    })
+                })
+                .catch(() => {
+                    serverError(res)
+                })
+        })
+        .catch(() => {
+            serverError(res)
+        })
+}
+
 module.exports = {
     register,
     login,
@@ -312,5 +389,7 @@ module.exports = {
     resetPasswordController,
     getAllUser,
     getMe,
-    getProfile
+    getProfile,
+    deleteProfile,
+    deleteProfilePic
 }

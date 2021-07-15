@@ -3,6 +3,7 @@ const {
     createPost,
     deletePost,
     getAllPost,
+    getPost,
     getMyPost,
     likePost,
     commentsPost,
@@ -12,8 +13,9 @@ const authenthicate = require('../middlewares/authenthicate')
 const uploader = require('../middlewares/fileUpload')
 
 router.post('/post/create', authenthicate, uploader.single('image'), createPost)
-router.delete('/post/:id', deletePost)
+router.delete('/post/:id/:username', authenthicate, deletePost)
 router.get('/post/allpost', getAllPost)
+router.get('/post/:id',authenthicate, getPost)
 router.get('/post/mypost/:username', authenthicate, getMyPost)
 router.post('/post/like/:id', authenthicate, likePost)
 router.post('/post/comments/:id', authenthicate, commentsPost)

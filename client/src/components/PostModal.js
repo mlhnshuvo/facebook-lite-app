@@ -24,6 +24,7 @@ export default function PostModal(props) {
         fd.append('image', postImg.image)
         fd.append('body', postBody.body)
         dispatch(createPost(fd))
+        props.modalClose()
     }
 
     const inputEl = useRef(null);

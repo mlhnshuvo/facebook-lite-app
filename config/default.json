@@ -1,4 +1,3 @@
 {
-  "localhostURL": "mongodb://localhost:27017/mern-facebook-lite",
   "port": 5000
 }

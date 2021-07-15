@@ -1,21 +1,35 @@
-# Mern-Stack-Money-Management-App-With-Redux
+# Mern-Stack-Facebook-Lite
 
-This is a project template for mern-stack-money-management-app-with-redux. It lives at https://mern-money-manage-redux-mhs.herokuapp.com
+This is a project template for mern-facebook-lite. It lives at https://mern-facebook-lite-mhs.herokuapp.com
 
 ```bash
 Feature:
 • Login/Logout with authentication
-• Transaction add, delete and update
+• Message send to email for active accout using SMTP server
+• SMS send to phone for welcome message using twilio
+• Profile 
+• Post
+• Like
+• Comments and reply
+• Share
+• File upload
+• Search post
 
 Technology:
 • HTML
 • CSS
 • Reactjs
-• ReactStrap
+• Bootstrap
 • Redux
+• Multer
+• React google captcha
+• React quill
+• Passportjs
 • Nodejs
 • Expressjs
 • Mongodb
+• SMTP server
+• Twilio API
 • Heroku
 ```
 
@@ -38,6 +52,6 @@ npm start
 ```
 
 ```bash
-Backend will run on port 4000
+Backend will run on port 5000
 Frontend will run on http://localhost:3000
 ```

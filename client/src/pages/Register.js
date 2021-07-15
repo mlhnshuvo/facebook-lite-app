@@ -3,13 +3,13 @@ import { Link, useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { registerUser } from '../store/actions/userAction'
 import Recaptcha from 'react-google-recaptcha'
-import { ReCAPTCHA_SITE_KEY } from '../App.cofig'
+import AppConfig from '../App.cofig'
 
 export default function Register() {
     const [state, setState] = useState({
         name: '',
-        username: '',
         email: '',
+        phone: '',
         password: '',
         errors: {},
         token: ''
@@ -26,11 +26,8 @@ export default function Register() {
 
     const formHandler = (e) => {
         e.preventDefault();
-        console.log(state)
-   
-            dispatch(registerUser(state, history))
-            reCaptcha.current.reset();
-       
+        dispatch(registerUser(state, history))
+        reCaptcha.current.reset();
     }
 
     const onChange = function (value) {
@@ -46,13 +43,14 @@ export default function Register() {
                     <input onChange={changeHandler} type="name" className="form-control" name="name" />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label is-invalid">User name</label>
-                    <input onChange={changeHandler} type="username" className="form-control" name="username" />
-                </div>
-                <div className="mb-3">
                     <label className="form-label is-invalid">Email address</label>
                     <input onChange={changeHandler} type="email" className="form-control" name="email" />
                     <div className="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label is-invalid">Phone</label>
+                    <input onChange={changeHandler} type="phone" className="form-control" name="phone" />
+                    <div className="form-text">We'll never share your phone with anyone else.</div>
                 </div>
                 <div className="mb-3">
                     <label className="form-label is-invalid">Password</label>
@@ -60,7 +58,7 @@ export default function Register() {
                 </div>
                 <div className="mb-3 form-check">
                     <Recaptcha
-                        sitekey={ReCAPTCHA_SITE_KEY}
+                        sitekey={AppConfig().ReCAPTCHA_SITE_KEY}
                         onChange={onChange}
                         ref={reCaptcha} />
                 </div>
