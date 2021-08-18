@@ -86,7 +86,7 @@ export const likePost = (id) => dispatch => {
             'Content-Type': 'application/json',
         }
     }
-    Axios.post('/api/post/like/' + id, options)
+    Axios.put('/api/post/like/' + id, options)
         .then((res) => {
             dispatch({
                 type: Types.LIKE__POST,

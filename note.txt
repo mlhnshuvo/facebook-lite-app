@@ -1,7 +1,0 @@
-task:
-change the post of author photo with the change of author photo
-if like then change the like color
-crop image
-
-bug
-like error

@@ -18,6 +18,9 @@ const authenthicate = require('../middlewares/authenthicate')
 
 router.post('/user/register', register)
 router.post('/user/login', login)
+// router.get('/google/callback', function (req, res) {
+//     console.log(req, res)
+// })
 router.get('/user/active/:token', activeController)
 router.put('/user/update', authenthicate, updateUser)
 router.post('/user/uploadpic', authenthicate, fileUpload.single('avatar'), profilePicUpload)

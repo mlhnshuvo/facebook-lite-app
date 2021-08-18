@@ -11,12 +11,13 @@ import Profile from '../pages/Profile'
 import SinglePost from '../pages/SinglePost'
 import Page404 from '../pages/Page404'
 import ProfilePicShow from '../pages/ProfilePicShow'
+import AuthGoogle from '../pages/AuthGoogle'
 import {
     BrowserRouter as Router,
     Switch,
     Route,
 } from "react-router-dom";
-import PrivateRoute from '../components/PrivateRoute'
+import PrivateRoute from '../components/PrivateRoute';
 
 export default function router() {
     return (
@@ -50,6 +51,9 @@ export default function router() {
                 </Route>
                 <Route exact path="/profilepic/:name">
                     <ProfilePicShow />
+                </Route>
+                <Route exact path="/google">
+                    <AuthGoogle />
                 </Route>
                 <Page404 />
             </Switch>
