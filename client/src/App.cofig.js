@@ -3,11 +3,11 @@ const AppConfig = () => {
     let ReCAPTCHA_SITE_KEY
 
     if (process.env.NODE_ENV === 'production') {
-        ReCAPTCHA_SITE_KEY = '6LdjlocbAAAAABWpq-813GMixkCv27OBlcdWJi3F'
+        ReCAPTCHA_SITE_KEY = '6LfXYIYbAAAAAMubzTBtocBF3-ynGKm4FvlvTPB7'
         FRONTEND_URL = 'https://mern-facebook-lite-mhs.herokuapp.com'
     } else {
-        ReCAPTCHA_SITE_KEY = '6LdjlocbAAAAABWpq-813GMixkCv27OBlcdWJi3F'
-        FRONTEND_URL = 'https://mern-facebook-lite-mhs.herokuapp.com'
+        ReCAPTCHA_SITE_KEY = '6LfXYIYbAAAAAMubzTBtocBF3-ynGKm4FvlvTPB7'
+        FRONTEND_URL = `http://localhost:3000`
     }
 
     return {
