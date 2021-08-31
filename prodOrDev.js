@@ -4,7 +4,7 @@ let ReCAPTCHA_SECRET_KEY
 let FRONTEND_URL
 
 if (process.env.NODE_ENV === 'production') {
-    MONGODB_URL = `mongodb+srv://mlhnshuvo:${process.env.MONGODB_PASSWORD}@cluster.vg1yn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+    MONGODB_URL = `mongodb+srv://mlhnshuvo:${process.env.MONGODB_PASSWORD}@cluster.vg1yn.mongodb.net/mern-facebook-lite?retryWrites=true&w=majority`
     ReCAPTCHA_SITE_KEY = process.env.ReCAPTCHA_SITE_KEY_PROD
     ReCAPTCHA_SECRET_KEY = process.env.ReCAPTCHA_SECRET_KEY_PROD
     FRONTEND_URL = 'https://mern-facebook-lite-mhs.herokuapp.com'
