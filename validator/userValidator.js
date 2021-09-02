@@ -19,7 +19,7 @@ const registerValidator = (user) => {
     if (!user.token) {
         error.token = "Please fill recaptcha"
     } else {
-        axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${ReCAPTCHA_SECRET_KEY}&response=${user.token}`)
+        axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${ReCAPTCHA_SECRET_KEY_PROD}&response=${user.token}`)
             .then((response) => {
                 if (response) {
                     error.token = ''
