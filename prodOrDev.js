@@ -9,6 +9,7 @@ let FRONTEND_URL
     ReCAPTCHA_SECRET_KEY = process.env.ReCAPTCHA_SECRET_KEY_PROD
     FRONTEND_URL = 'https://facebook-lite-app-mhs.herokuapp.com'
 
+console.log(process.env.MONGODB_PASSWORD);
 
 module.exports = {
     MONGODB_URL,
