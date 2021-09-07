@@ -20,7 +20,7 @@ import PrivateRoute from '../components/PrivateRoute';
 
 export default function router() {
     return (
-        <Router basename={window.location.pathname || ''}>
+        <Router>
             <NavBar />
             <Alert />
             <Switch>

@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
     ReCAPTCHA_SECRET_KEY = process.env.ReCAPTCHA_SECRET_KEY_PROD
     FRONTEND_URL = 'https://facebook-lite-app-mhs.herokuapp.com'
 } else {
-    MONGODB_URL = process.env.MONGODB_PASSWORD
+    MONGODB_URL = 'mongodb://localhost:27017/facebook-lite-app'
     ReCAPTCHA_SITE_KEY = process.env.ReCAPTCHA_SITE_KEY
     ReCAPTCHA_SECRET_KEY = process.env.ReCAPTCHA_SECRET_KEY
     FRONTEND_URL = 'http://localhost:3000'

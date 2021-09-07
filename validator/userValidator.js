@@ -21,16 +21,17 @@ const registerValidator = (user) => {
     } else {
         axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${ReCAPTCHA_SECRET_KEY}&response=${user.token}`)
             .then((response) => {
-                if (response) {
-                    error.token = ''
+                if (response.data.success) {
+                    error.token = null
                 } else {
                     error.token = 'Invalid recaptcha'
                 }
             })
-            .catch((error) => {
-                console.log(error)
+            .catch(() => {
+                error.token = 'Invalid recaptcha'
             })
     }
+    
     return {
         error,
         isValid: Object.keys(error).length === 0
