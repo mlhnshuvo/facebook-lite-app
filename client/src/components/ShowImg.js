@@ -22,7 +22,7 @@ function ShowImg({ fileSelectedHandler }) {
                     ref={inputEl} />
             }
             <img
-                src={state.user.avatar.length > 0 ? state.user.avatar[0] : Avatar}
+                src={state.user.avatar.length > 0 ? state.user.avatar[0].url : Avatar}
                 alt=""
                 className="profile__photo"
                 onClick={onButtonClick}

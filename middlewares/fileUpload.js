@@ -3,9 +3,6 @@ const path = require('path');
 
 // setup storage and rename file to store uploaded files
 const storage = multer.diskStorage({
-	destination: (_req, _file, cb) => {
-		cb(null, 'public/uploads');
-	},
 	filename: (_req, file, cb) => {
 		cb(null, Date.now() + '-' + file.originalname);
 	},

@@ -34,7 +34,7 @@ export default function NavBar() {
                 </div>
                 <div className="nav__right-side">
                     <Link to={`/${store.user && store.user.username}`} ><span className="nav__icon icon--pointer">
-                        < img className="nav__icon-img" src={store.user && store.user.avatar.length > 0 ? store.user.avatar[0] : Avatar} alt="" />
+                        < img className="nav__icon-img" src={store.user && store.user.avatar.length > 0 ? store.user.avatar[0].url : Avatar} alt="" />
                     </span></Link>
                     <span className="nav__icon icon--pointer">
                         < img className="nav__icon-img" src={Message} alt="Collapse" />

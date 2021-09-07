@@ -323,10 +323,11 @@ p {
   height: 200px;
   border-radius: 50%;
   position: absolute;
-  top: 140px;
-  left: 580px;
-  cursor: pointer;
+  top: 30%;
+  left: 43%;
   right: 0;
+  cursor: pointer;
+  bottom: 0;
   border: 5px solid var(--other-background-color);
 }
 
@@ -354,6 +355,12 @@ p {
 .profile__top {
   position: relative;
 }
+
+.profile-photo__ahref{
+  display: inline-grid
+}
+
+
 
 .cover__photo {
   width: 900px;

@@ -83,7 +83,7 @@ export default function CreateCom({ post }) {
             }
 
             {state.ComInputShow ? <div className="show-post__comments">
-                <img className="show-post__top-img avatar" src={store.user && store.user.avatar.length > 0 ? store.user.avatar[0] : Avatar} alt="PostImg" />
+                <img className="show-post__top-img avatar" src={store.user && store.user.avatar.length > 0 ? store.user.avatar[0].url : Avatar} alt="PostImg" />
                 <input
                     type="text"
                     placeholder="Write a comment..."

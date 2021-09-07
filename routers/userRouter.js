@@ -30,6 +30,6 @@ router.get('/user/allusers', getAllUser)
 router.get('/user/me', authenthicate, getMe)
 router.get('/user/:username', authenthicate, getProfile)
 router.delete('/user/:username', authenthicate, deleteProfile)
-router.delete('/user/pic/:index', authenthicate, deleteProfilePic)
+router.delete('/user/pic/:id/:index', authenthicate, deleteProfilePic)
 
 module.exports = router

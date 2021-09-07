@@ -7,6 +7,13 @@ const userRouter = require('./routers/userRouter')
 const postRouter = require('./routers/postRouter')
 const path = require('path')
 const config = require('config');
+const cloudinary = require("cloudinary");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
 const app = express();
 app.use(express.json());
@@ -20,8 +27,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }
-
-app.use('/public/uploads', express.static(path.join('public', 'uploads')))
 
 app.use('/api', userRouter)
 app.use('/api', postRouter)

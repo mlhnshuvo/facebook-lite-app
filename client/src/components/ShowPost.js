@@ -78,7 +78,7 @@ export default function ShowPost({ store, className }) {
                                     <p className="show-post__text">
                                         {ReactHtmlParser(post.body)}
                                     </p>
-                                    <img src={post.image} alt="postImg" className="show-post__img" />
+                                    <img src={post.image.url} alt="postImg" className="show-post__img" />
                                 </div>
                                 <LkeCmntShr post={post} />
                             </div>

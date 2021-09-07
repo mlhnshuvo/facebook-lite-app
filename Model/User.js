@@ -25,7 +25,12 @@ const userSchema = new Schema({
         trim: true,
         minLength: 5
     },
-    avatar: [String],
+    avatar: [
+        {
+            url: String,
+            public_id: String
+        }
+    ],
     isActive: {
         type: Boolean,
         default: false

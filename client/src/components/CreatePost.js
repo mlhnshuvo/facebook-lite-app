@@ -14,7 +14,7 @@ export default function Post() {
     return (
         <div className="ourcard card--mind">
             <div className="card__mind-item">
-                <img src={store.user && store.user.avatar.length > 0 ? store.user.avatar[0] : Avatar} className="avatar" alt="" />
+                <img src={store.user && store.user.avatar.length > 0 ? store.user.avatar[0].url : Avatar} className="avatar" alt="" />
                 <input type="text" className="input input--mind" placeholder={`What's on your mind ${store.user ? store.user.name : ''}?`}
                     onFocus={() => setState({ open: true })} />
             </div>
