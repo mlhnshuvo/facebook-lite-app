@@ -8,6 +8,8 @@ export const registerUser = (user, history) => dispatch => {
     if (user.token) {
         Axios.post('/api/user/register', user)
             .then((response) => {
+
+                console.log(response.data);
                 dispatch({
                     type: Types.REGISTER__USER,
                     payload: {
@@ -19,6 +21,7 @@ export const registerUser = (user, history) => dispatch => {
                 localStorage.setItem("token", response.data.token)
             })
             .catch((err) => {
+                console.log(err);
                 dispatch({
                     type: Types.ERROR__USER,
                     payload: {

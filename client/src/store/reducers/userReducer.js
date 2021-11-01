@@ -18,6 +18,7 @@ const userReducer = (state = init, action) => {
             }
         }
         case Types.ERROR__USER: {
+            console.log(action.payload.errors.data);
             return {
                 ...state,
                 errors: action.payload.errors.data
